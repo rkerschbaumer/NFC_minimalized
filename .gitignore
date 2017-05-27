@@ -1,0 +1,8 @@
+/.config/
+Debug/
+/.launches/
+Release/
+/.settings/
+/src/
+.xdchelp
+.asdf
