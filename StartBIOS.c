@@ -38,8 +38,8 @@
 /* Application headers */
 #include"register.h"
 
-#define BP1_IN_USE 1
-#define BP2_IN_USE 0
+#define BP1_IN_USE 0
+#define BP2_IN_USE 1
 
 #define SPI_DRIVER_API_IN_USE 1
 #define LEGACY_SPI_IN_USE 0
@@ -189,6 +189,7 @@ void taskfunction(UArg arg0){
     spiParams.transferMode = SPI_MODE_BLOCKING;
     spiParams.dataSize = 8;
     spiParams.frameFormat = SPI_POL0_PHA1;
+
 	#if BP1_IN_USE
     	spi_hendl = SPI_open(Board_SPI0, &spiParams);
 	#endif
@@ -210,6 +211,10 @@ void taskfunction(UArg arg0){
 	Task_sleep(10);
 	send_direct_command(TRF79XXA_IDLE_CMD);
 	Task_sleep(10);
+
+    read_register(0x04);
+
+
 	send_direct_command(TRF79XXA_RESET_FIFO_CMD);
 	Task_sleep(10);
 
@@ -223,7 +228,7 @@ void taskfunction(UArg arg0){
 	write_register(reg_write_buffer);
 	Task_sleep(10);
 
-	read_register(0x00);
+    read_register(0x04);
 
 	while(1){
 		Task_sleep(500);
